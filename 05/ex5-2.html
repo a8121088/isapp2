@@ -22,8 +22,19 @@
             var sql = `insert into Tweets (name, tweet, time) values("${userid}", "${tweet}", now());`;
             var objects = await osql.connect(sql);
             console.log(objects);
-            document.getElementById('result').innerHTML = "tweetしました";
-            document.getElementById('tf2').value = ' '
+            var sql = 'select * from Tweets  order by time desc limit 20';
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            var html = '';
+            html = html + '<ul>';
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                html = html + '<li>' + object.id + ',' + object.name + ',' + object.tweet + ',' + object.time + '</li>';
+            }
+            html = html + '</ul>';
+            document.getElementById('result').innerHTML = html;
+
+            document.getElementById('tf2').value = ''
         }
     </script>
 
